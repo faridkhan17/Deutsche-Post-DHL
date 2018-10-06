@@ -85,8 +85,7 @@ def load_support_file(filename):
         #list of keywords (list of lists)
         dfList2 = df_filter_keywords.values.tolist()
         #color_code_df.iloc[0,1]
-        # as a list (again, Farid liked lists a lot. Most other lists were replaced by myself 
-        # as it is error-prone)
+        # as a list
         dfList = sum(dfList2, [])
         #removing nan (empty cells, non-colored)
         dfList1 = [i for i in dfList if i is not np.nan]
@@ -96,7 +95,7 @@ def load_support_file(filename):
         dictionary_keywords = dict(zip(dfList1, color_list1_nonan))
         
         # the original file has several words for open / closed tickets in a "Status" columns. 
-        # For better filtering, Axel wants an easier mapping. 
+        # For better filtering
         # Therefore, in a new sheet, several words were listed with their respective mapping
         # mapping. This sheet can be modified by their team. 
         # The mapping will be joined with the original file later
@@ -134,8 +133,7 @@ def read_and_preprocess_HD_tickets():
             logger.info(text)
         df = pd.read_excel(os.path.join("Files/", file_to_read[0]), index = False)
 
-        # as specified above, Axel wants an easier status mapping, mapping various actions into
-        # only open / closed. The mapping file was read in in the previous step  and is then left-joined
+        # The mapping file was read in in the previous step  and is then left-joined
         # to the original file. 
         df = pd.merge(df, open_closed_mapping, how = "left", on = ["Status"] )
         
@@ -304,7 +302,7 @@ def weekly_analysis():
         
         # month to week percentage change with 4 week rolling average
         Monthly_mean = weekly_topics.rolling(4).mean().add_suffix('_4wk_roll_avg')
-        # Please consult Farid here 
+        
         Monthly_mean.loc[0] = np.nan 
         Monthly_mean.index = Monthly_mean.index + 1  # shifting index for calendar year month
         Monthly_mean = Monthly_mean.sort_index()       
